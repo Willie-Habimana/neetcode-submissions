@@ -1,13 +1,15 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        sorted_strs = [str(sorted(list(string))) for string in strs]
         hmap = {}
         ans = []
-        for word in strs:
-            sorted_word = "".join(sorted(word))
-            if sorted_word not in hmap:
-                ans.append([word])
-                hmap[sorted_word] = len(ans) - 1
+        for i in range(len(sorted_strs)):
+            if sorted_strs[i] not in hmap:
+                hmap[sorted_strs[i]] = [strs[i]]
             else:
-                ans[hmap[sorted_word]].append(word)
+                hmap[sorted_strs[i]].append(strs[i])
+        
+        for arr in hmap.values():
+            ans.append(arr)
         
         return ans
